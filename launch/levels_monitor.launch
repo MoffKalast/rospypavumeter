@@ -5,16 +5,6 @@
 
 <launch>
 
-  <arg name="robot"/>
-<!--
-  <arg name="sink_name" default="alsa_output.pci-0000_00_1b.0.analog-stereo"/>
-  <arg name="meter_rate" default="200"/>
-  <arg name="max_sample_value" default="127"/>
-  <arg name="display_scale" default="0"/>
--->
-
-  <group ns="$(arg robot)">
-
     <rosparam param="sink_name">"alsa_output.pci-0000_00_1b.0.analog-stereo"</rosparam>
     <rosparam param="meter_rate">200</rosparam>
     <rosparam param="max_sample_value">127</rosparam>
@@ -26,6 +16,5 @@
         type="vumeter.py"
         output="screen"/>
 
-  </group>
 
 </launch>
