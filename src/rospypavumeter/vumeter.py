@@ -9,7 +9,7 @@ from pulseaudio.lib_pulseaudio import *
 
 # ROS
 import rospy
-from std_msgs.msg import Float64
+from std_msgs.msg import UInt8
 
 # ros node name
 _DEFAULT_NAME = 'vumeter_node'
@@ -113,7 +113,7 @@ def _init_node(node_name):
 
 def _audio_level_publisher(_SINK_NAME, _METER_RATE, _MAX_SAMPLE_VALUE, _DISPLAY_SCALE):
 
-    audioLevelPublsher = rospy.Publisher('audioLevel', Float64, queue_size=10)
+    audioLevelPublsher = rospy.Publisher('audioLevel', UInt8, queue_size=1)
     rate = rospy.Rate(_METER_RATE)
 	
     monitor = PeakMonitor(_SINK_NAME, _METER_RATE)
