@@ -113,7 +113,7 @@ def _init_node(node_name):
 
 def _audio_level_publisher(_SINK_NAME, _METER_RATE, _MAX_SAMPLE_VALUE, _DISPLAY_SCALE):
 
-    audioLevelPublsher = rospy.Publisher('audioLevel', UInt8, queue_size=70)
+    audioLevelPublsher = rospy.Publisher('audioLevel', UInt8, queue_size=10)
     rate = rospy.Rate(_METER_RATE)
 	
     monitor = PeakMonitor(_SINK_NAME, _METER_RATE)
