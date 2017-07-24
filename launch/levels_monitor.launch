@@ -6,7 +6,7 @@
 <launch>
 
     <rosparam param="sink_name">"alsa_output.pci-0000_00_1b.0.analog-stereo"</rosparam>
-    <rosparam param="meter_rate">15</rosparam>
+    <rosparam param="meter_rate">10</rosparam>
     <rosparam param="max_sample_value">127</rosparam>
     <rosparam param="display_scale">0</rosparam>
 
