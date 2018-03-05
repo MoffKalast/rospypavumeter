@@ -32,6 +32,7 @@ class PeakMonitor(object):
         self.rate = rate
         self.pa_state = False
         self.timestamp = datetime.now()
+        self.timestamp_stream = datetime.now()
 
         # Wrap callback methods in appropriate ctypefunc instances so
         # that the Pulseaudio C API can call them
@@ -120,15 +121,17 @@ class PeakMonitor(object):
                                      PA_STREAM_PEAK_DETECT)
 
     def stream_read_cb(self, stream, length, index_incr):
-        data = c_void_p()
-        pa_stream_peek(stream, data, c_ulong(length))
-        data = cast(data, POINTER(c_ubyte))
-        for i in xrange(length):
-            # When PA_SAMPLE_U8 is used, samples values range from 128
-            # to 255 because the underlying audio data is signed but
-            # it doesn't make sense to return signed peaks.
-            self._samples.put(data[i] - 128)
-        pa_stream_drop(stream)
+        #if datetime.now() - self.timestamp_stream > timedelta(days=0,seconds=0.2):
+    	data = c_void_p()
+    	pa_stream_peek(stream, data, c_ulong(length))
+    	data = cast(data, POINTER(c_ubyte))
+    	for i in xrange(length):
+    		# When PA_SAMPLE_U8 is used, samples values range from 128
+    		# to 255 because the underlying audio data is signed but
+    		# it doesn't make sense to return signed peaks.
+    		self._samples.put(data[i] - 128)
+    	self.timestamp_stream = datetime.now()
+    	pa_stream_drop(stream)
 
     def context_subscribe_cb(self, context, event_typ, idex, __):
         print "The event is ", event_typ
@@ -192,7 +195,8 @@ def _audio_level_publisher(_SINK_NAME, _METER_RATE, _MAX_SAMPLE_VALUE, _DISPLAY_
     while not rospy.is_shutdown():
 		
         level = monitor._samples.get() >> _DISPLAY_SCALE
-		
+        level = level * 0.8
+        #print level
 		#bar = '|' * level
 		#spaces = ' ' * ((_MAX_SAMPLE_VALUE >> _DISPLAY_SCALE) - level)	
 		#explicit_level = ' %3d %s%s\r' % (level, bar, spaces)
