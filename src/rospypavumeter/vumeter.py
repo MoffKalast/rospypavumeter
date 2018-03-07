@@ -134,14 +134,14 @@ class PeakMonitor(object):
     	pa_stream_drop(stream)
 
     def context_subscribe_cb(self, context, event_typ, idex, __):
-        print "The event is ", event_typ
+        #print "The event is ", event_typ
         #print "The id is ", idex
         event_type_masked = event_typ & PA_SUBSCRIPTION_EVENT_TYPE_MASK
 
         if (event_typ & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) == PA_SUBSCRIPTION_EVENT_SINK_INPUT:
-            print "Sink Input Event"
+            #print "Sink Input Event"
             if event_type_masked == PA_SUBSCRIPTION_EVENT_NEW and self.pa_state == False:
-                "SIA event detected. Proceeding to get the timestamp"
+                #print "SIA event detected. Proceeding to get the timestamp"
                 self.timestamp = datetime.now()
                 
             # elif event_type_masked == PA_SUBSCRIPTION_EVENT_REMOVE:
@@ -151,12 +151,12 @@ class PeakMonitor(object):
         # This statement catches events related with the sinks
         # In this case the event catched is meant to occcur after the Sink Input event and in the system initial state
         elif (event_typ & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) == PA_SUBSCRIPTION_EVENT_SINK:
-            print "Sink event catched"
+            #print "Sink event catched"
             # if event_type_masked in (PA_SUBSCRIPTION_EVENT_NEW, PA_SUBSCRIPTION_EVENT_REMOVE):                    
             if event_type_masked == PA_SUBSCRIPTION_EVENT_CHANGE and self.pa_state == False:
-                print "Changes detected in the Sink. Comparing the timestamp..."
+                #print "Changes detected in the Sink. Comparing the timestamp..."
                 if datetime.now() - self.timestamp < timedelta(days=0,seconds=2):
-                    print "Enough time has passed since the timestamp was recorded"
+                    #print "Enough time has passed since the timestamp was recorded"
                     pa_stream_disconnect(self.pa_stream)
                     o = pa_context_get_sink_info_list(context, self._sink_info_cb, None)
                     pa_operation_unref(o)
@@ -164,7 +164,7 @@ class PeakMonitor(object):
         # This statement catches any modifications made to the soundcards as additions, removals, etc
         # Card-related events cannot occur at the same time, what makes the system easier to control
         elif (event_typ & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) == PA_SUBSCRIPTION_EVENT_CARD:
-            print "Card event detected"
+            #print "Card event detected"
             pa_stream_disconnect(self.pa_stream)
             time.sleep(1)
             o = pa_context_get_sink_info_list(context, self._sink_info_cb, None)
@@ -195,7 +195,7 @@ def _audio_level_publisher(_SINK_NAME, _METER_RATE, _MAX_SAMPLE_VALUE, _DISPLAY_
     while not rospy.is_shutdown():
 		
         level = monitor._samples.get() >> _DISPLAY_SCALE
-        level = level * 0.8
+        level = level * 0.6
         #print level
 		#bar = '|' * level
 		#spaces = ' ' * ((_MAX_SAMPLE_VALUE >> _DISPLAY_SCALE) - level)	
