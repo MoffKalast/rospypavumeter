@@ -10,14 +10,7 @@ To fix all dependencies run the install.sh script in /scripts first.
 
 ## Run
 
-Example of a launcher for a vumeter node. For more information try to run the node using rosrun
-```sh
-$ rosrun rospypavumeter vumeter -h
-```
-For running using roslaunch
-```sh
-$ roslaunch rospypavumeter levels_monitor.launch robot:=<robot_name>
-```
+    roslaunch rospypavumeter levels_monitor.launch
 
 ## ROS API
 
