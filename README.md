@@ -29,7 +29,7 @@ Analog VU meter connected to Linux sound system, PulseAudio, allowing any sound 
 
 ##### Published Topics
 
-`audioLevel`(*std_msgs/UInt8*):
+`audio_level`(*std_msgs/UInt8*):
     Integer with the value of the peak received from the sink.
 
 ##### Parameters
