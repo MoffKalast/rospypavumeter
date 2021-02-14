@@ -25,7 +25,9 @@ $ roslaunch rospypavumeter levels_monitor.launch robot:=<robot_name>
 
 #### vumeter_node
 
-Analog VU meter connected to Linux sound system, PulseAudio, allowing any sound output (or "sink" in PulseAudio's nomenclature) to be monitored. The main PulseAudio API is asynchronous and callback based, and the documentation is primarly just an API reference. To help with volume meter style applications, PulseAudio even allows you to ask for peak level measurements, which means you can sample the monitor sink at a low frequency, with low CPU utilisation, but still producing a useful volume display. When this feature is used, each sample read indicates the peak level since the last sample. This program is designed to detect whatever sink is active in any moment in a dynamic manner, instead of previous implementations which have this parameter harcoded, and read the stream of audio coming from it, publishing through ROS protocol the detected peaks.  
+PulseAudio allows any sound sink to be monitored. The PulseAudio API is asynchronous and callback based, and the documentation is primarly just an API reference. To help with volume meter style applications, PulseAudio even allows you to ask for peak level measurements, which means you can sample the monitor sink at a low frequency, with low CPU utilisation, but still get useful values. When this feature is used, each sample read indicates the peak level since the last sample. 
+
+This program is designed to detect whatever sink is active in any moment in a dynamic manner, instead of previous implementations which have this parameter harcoded, and read the stream of audio coming from it, publishing the detected peaks through ROS.  
 
 ##### Published Topics
 
