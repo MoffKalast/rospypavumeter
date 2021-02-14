@@ -4,6 +4,10 @@
 
 Analog VU meter developed using the PulseAudio library, using a Python wrapper of the original C library. Composed by one node, vumeter_node, explained below. 
 
+## Install
+
+To fix all dependencies run the install.sh script in /scripts first.
+
 ## Run
 
 Example of a launcher for a vumeter node. For more information try to run the node using rosrun
